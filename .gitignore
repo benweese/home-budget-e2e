@@ -165,3 +165,7 @@ vite.config.ts.timestamp-*
 # Claude Code: personal settings + privacy denylist cache
 .claude/settings.local.json
 .claude/privacy/
+
+# Claude Code: local-only board config and saved test requirements (never committed)
+.claude/board.json
+.claude/qa/

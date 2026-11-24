@@ -1,0 +1,5 @@
+{
+	"version": 1,
+	"hooks": { "lintAfterEdit": true, "autoReview": true },
+	"a11y": { "wcag": "2.2", "level": "AA" }
+}
