@@ -6,9 +6,15 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    commit-message:
+      prefix: chore
+      include: scope
   # Container images the workflows run with `docker run`, pinned by tag + digest in .github/docker/<tool>/Dockerfile.
   - package-ecosystem: docker
     directories:
       - /.github/docker/*
     schedule:
       interval: weekly
+    commit-message:
+      prefix: chore
+      include: scope
