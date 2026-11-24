@@ -1,0 +1,28 @@
+# PR titles must be Conventional Commits: squash merge makes the title the commit on main, and release-please
+# builds the changelog from it. Required check on main. The title is passed through env, never interpolated
+# into the script. Types and examples: CONTRIBUTING.md.
+name: PR title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions: {}
+
+jobs:
+  pr-title:
+    name: pr-title
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check the title is a Conventional Commit
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          pattern='^(feat|fix|perf|refactor|docs|test|build|ci|chore|revert)(\([a-z0-9-]+\))?!?: [^ ].*$'
+          if [[ "$TITLE" =~ $pattern ]]; then
+            echo "OK: $TITLE"
+          else
+            echo "::error::PR title isn't a Conventional Commit: \"$TITLE\". Use type(scope)?: summary, e.g. \"feat(worker): add health route\". Types: feat fix perf refactor docs test build ci chore revert. See CONTRIBUTING.md."
+            exit 1
+          fi
