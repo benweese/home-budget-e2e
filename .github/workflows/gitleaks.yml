@@ -1,0 +1,31 @@
+# Secret scanning on every push and PR: the gitleaks CLI in a container, image pinned by digest in
+# .github/docker/gitleaks/Dockerfile (Dependabot keeps it current). Third-party tools run as pinned images, so
+# this runs the official image with `docker run` instead of a third-party action. A leak fails the job; findings
+# are printed redacted in the log.
+# Docs: https://github.com/gitleaks/gitleaks#docker and `gitleaks git --help`.
+name: gitleaks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  scan:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # the whole history
+          persist-credentials: false
+      - name: Scan the git history
+        run: |
+          image=$(sed -n 's/^FROM //p' .github/docker/gitleaks/Dockerfile)
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo:ro" "$image" \
+            git /repo --redact --no-banner --verbose --exit-code 1
