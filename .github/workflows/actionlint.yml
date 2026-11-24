@@ -1,0 +1,28 @@
+# Lints GitHub Actions workflow files when they change: actionlint in a container, image pinned by digest in
+# .github/docker/actionlint/Dockerfile (Dependabot keeps it current). Third-party tools run as pinned images,
+# so this uses `docker run`, not a docker:// step.
+# Docs: https://github.com/rhysd/actionlint/blob/main/docs/usage.md ("Use actionlint on GitHub Actions").
+name: actionlint
+
+on:
+  push:
+    paths: [".github/workflows/**", ".github/actionlint.yaml", ".github/docker/**"]
+  pull_request:
+    paths: [".github/workflows/**", ".github/actionlint.yaml", ".github/docker/**"]
+
+permissions: {}
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check workflow files
+        run: |
+          image=$(sed -n 's/^FROM //p' .github/docker/actionlint/Dockerfile)
+          docker run --rm -v "$PWD:/repo:ro" -w /repo "$image" -color

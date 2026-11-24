@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # npm is added with the Playwright setup (no package.json yet).
+  # Actions pinned to commit SHAs in .github/workflows (the "# vX.Y.Z" comments are updated too).
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  # Container images the workflows run with `docker run`, pinned by tag + digest in .github/docker/<tool>/Dockerfile.
+  - package-ecosystem: docker
+    directories:
+      - /.github/docker/*
+    schedule:
+      interval: weekly

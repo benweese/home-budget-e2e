@@ -1,5 +1,7 @@
 # home-budget-e2e
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/benweese/home-budget-e2e/badge)](https://scorecard.dev/viewer/?uri=github.com/benweese/home-budget-e2e)
+
 Playwright end-to-end and accessibility tests for [home-budget](https://github.com/benweese/home-budget) (iPhone, iPad, desktop).
 
 **Status: early — not ready to use.** The project is being set up; there are no tests yet.
