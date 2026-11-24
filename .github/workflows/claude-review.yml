@@ -47,6 +47,8 @@ jobs:
             1. Privacy: no real personal data (names, amounts, emails, phone, card or account numbers, addresses,
                credentials, production domains) in code, tests, fixtures, docs, commit messages or the PR text, and no
                references to private trackers or issue numbers from elsewhere. Made-up data and example.com are fine.
+               The app's name "Budget Ben" is an allowed exception (the owner's first name, chosen as the brand,
+               see CLAUDE.md); don't flag it. Flag any other real name.
             2. Tests: fictional data only; never aimed at production; role/label locators first; one goal per test;
                accessibility reports say "no automated violations found", never "accessible".
             3. Snapshots: ARIA snapshots of stable regions only (no amounts, dates or counts).

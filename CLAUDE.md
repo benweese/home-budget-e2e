@@ -7,6 +7,8 @@ Public repo: Playwright end-to-end and accessibility tests for
 
 - **Public code, no personal data:** no real amounts, names, account or card numbers, emails, addresses or
   production domains in tests, fixtures, snapshots, docs or commits. Test data is fictional.
+- **One exception:** the app's name "Budget Ben" (the owner's first name, chosen as the brand) may appear in
+  tests and snapshots, e.g. checking the page title. No other real names, ever.
 - **No references to private trackers** in commits, PRs or code (no issue numbers from elsewhere).
 - Tests run against home-budget's local `wrangler dev` (later the demo), **never production**.
 - Locators: role / label first; `data-testid` only where a role or label is ambiguous.
