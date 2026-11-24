@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"commitHook": true,
+	"dollarAmounts": false,
+	"denylist": "../nobsbudget-private/privacy-denylist.txt"
+}

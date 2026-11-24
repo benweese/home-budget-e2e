@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"secrets": true,
+	"protectedFiles": false,
+	"dangerousCommands": true,
+	"lint": false
+}
