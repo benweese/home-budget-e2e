@@ -15,6 +15,15 @@ Public repo: Playwright end-to-end and accessibility tests for
 - Accessibility target: WCAG 2.2 AA plus home-budget's docs/accessibility.md. Reports say "no automated
   violations found", never "accessible".
 
+## Tests
+
+- `playwright.config.ts`: projects iphone / ipad (WebKit) and desktop (Chromium); `webServer` starts home-budget's
+  `wrangler dev` from `APP_DIR` (default `../home-budget`, built first). Device-only tests use the
+  `@iphone-only` / `@desktop-only` tags (no `test.skip`). Number new tests after the highest `#NNNN`.
+- WebKit isn't supported on every Linux distro: use `npm run test:docker` (image pinned in
+  `.github/docker/playwright`, must match `@playwright/test`).
+- Before every PR: `npm run lint`, `npm run typecheck`, `npm run format:check`, `npm test` (or test:docker).
+
 ## Workflow
 
 - PR titles are Conventional Commits; squash merge only.

@@ -169,3 +169,8 @@ vite.config.ts.timestamp-*
 # Claude Code: local-only board config and saved test requirements (never committed)
 .claude/board.json
 .claude/qa/
+
+# Playwright output
+playwright-report/
+test-results/
+blob-report/
