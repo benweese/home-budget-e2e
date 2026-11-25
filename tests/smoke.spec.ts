@@ -23,21 +23,28 @@ test.describe("smoke", { tag: "@smoke" }, () => {
 		await expect(page.getByRole("heading", { level: 1, name: "Home" })).toBeVisible();
 	});
 
-	test("#0004 gallery: Save counts presses; the unavailable button explains why", async ({ page }) => {
+	test("#0004 gallery: pressing Save counts the press", async ({ page }) => {
 		await page.goto("/gallery");
 		await page.getByRole("button", { name: "Save" }).click();
 		await expect(page.getByText("Pressed 1 times.")).toBeVisible();
+	});
+
+	test("#0011 gallery: the unavailable button is aria-disabled and says why", async ({ page }) => {
+		await page.goto("/gallery");
 		const addIt = page.getByRole("button", { name: "Add it" });
 		await expect(addIt).toHaveAttribute("aria-disabled", "true");
 		await expect(addIt).toHaveAccessibleDescription("Fill in a name first.");
 	});
 
 	test("#0005 pages are served with the security headers", async ({ request }) => {
-		const response = await request.get("/");
-		const headers = response.headers();
+		const headers = (await request.get("/")).headers();
 		expect(headers["content-security-policy"]).toContain("default-src 'self'");
 		expect(headers["x-content-type-options"]).toBe("nosniff");
+	});
+
+	test("#0012 the API health route answers ok", async ({ request }) => {
 		const api = await request.get("/api/health");
+		expect(api.ok()).toBe(true);
 		expect(await api.json()).toEqual({ status: "ok" });
 	});
 });

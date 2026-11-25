@@ -24,6 +24,11 @@ on:
 
 permissions: {}
 
+# A newer push to the same PR cancels the older run.
+concurrency:
+  group: e2e-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   lint:
     name: lint
@@ -68,10 +73,8 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
-          cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            home-budget/package-lock.json
+          # No npm cache in this job: it builds home-budget from an input ref, and a cache written here could be
+          # restored by later runs on main (CodeQL: actions/cache-poisoning).
       - run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
       - name: Build home-budget
         working-directory: home-budget

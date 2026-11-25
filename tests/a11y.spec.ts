@@ -11,17 +11,17 @@ test.describe("accessibility", { tag: "@a11y" }, () => {
 		});
 	}
 
-	test(
-		"#0007 forced colours: no violations besides colour contrast",
-		{ tag: "@desktop-only" },
-		async ({ page }) => {
-			await page.emulateMedia({ forcedColors: "active" });
-			for (const path of ["/", "/gallery"]) {
+	for (const path of ["/", "/gallery"]) {
+		test(
+			`#0007 forced colours on ${path}: no violations besides colour contrast`,
+			{ tag: "@desktop-only" },
+			async ({ page }) => {
+				await page.emulateMedia({ forcedColors: "active" });
 				await page.goto(path);
 				// axe's colour-contrast rule reads author colours, not the forced system palette Chromium draws.
 				const { violations } = await new AxeBuilder({ page }).disableRules(["color-contrast"]).analyze();
-				expect(violations.map((v) => `${path}: ${v.id}`)).toEqual([]);
-			}
-		},
-	);
+				expect(violations.map((v) => v.id)).toEqual([]);
+			},
+		);
+	}
 });

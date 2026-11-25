@@ -13,8 +13,9 @@ test.describe("reader settings", { tag: "@a11y" }, () => {
 			await page.emulateMedia({ contrast: "more" });
 			const more = await page.evaluate(token("--hb-color-text-muted"));
 			// Proves the emulation reaches WebKit: the token must actually change, to the full text colour.
-			expect(normal).toBe("#9aa3ad");
-			expect(more).toBe(await page.evaluate(token("--hb-color-text")));
+			const text = await page.evaluate(token("--hb-color-text"));
+			expect(normal).not.toBe(text);
+			expect(more).toBe(text);
 		},
 	);
 
