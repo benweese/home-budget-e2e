@@ -34,7 +34,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
-      - uses: anthropics/claude-code-action@eb56b6666facdbd501035f4a0269d8caee2e7a8b # v1.0.289
+      - id: claude
+        uses: anthropics/claude-code-action@eb56b6666facdbd501035f4a0269d8caee2e7a8b # v1.0.289
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           allow_fork_prs: false
@@ -61,3 +62,9 @@ jobs:
             Only post GitHub comments. Never push or edit files.
           claude_args: |
             --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
+      # The action skips itself (and the job still passes) when this PR changes this workflow file, because it
+      # only runs a workflow identical to the default branch's. Say so, so a green check doesn't hide a review
+      # that never ran. A warning, not a failure: that skip is expected on such PRs.
+      - name: Warn if no review ran
+        if: always() && steps.claude.outputs.execution_file == ''
+        run: echo "::warning::Claude didn't review this PR. Most likely it changes .github/workflows/claude-review.yml, which makes the action skip itself; ask for a review after merge or re-run on a later commit."
