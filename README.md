@@ -4,7 +4,28 @@
 
 Playwright end-to-end and accessibility tests for [home-budget](https://github.com/benweese/home-budget) (iPhone, iPad, desktop).
 
-**Status: early — not ready to use.** The project is being set up; there are no tests yet.
+## Run the tests
+
+Needs Node 24 and a built [home-budget](https://github.com/benweese/home-budget) checkout next to this repo
+(`npm ci && npm run app:build` there). Playwright starts its `wrangler dev` itself; nothing touches production.
+
+```sh
+npm ci
+npm test                 # all projects: iphone (WebKit), ipad (WebKit), desktop (Chromium)
+npm test -- --project=desktop
+npm run test:docker      # same suite in the official Playwright image (for Linux distros WebKit doesn't support)
+APP_DIR=/path/to/home-budget npm test
+```
+
+| Project   | Device               | Covers                                                    |
+| --------- | -------------------- | --------------------------------------------------------- |
+| `iphone`  | iPhone 15 (WebKit)   | smoke, axe, Increase Contrast, 310% text, 1-column layout |
+| `ipad`    | iPad Pro 11 (WebKit) | smoke, axe, 2-column layout                               |
+| `desktop` | Chromium, 1280×800   | smoke, axe, forced colours, 3-column layout               |
+
+Tests are numbered (`#0001`) and tagged (`@smoke`, `@a11y`, `@layout`; `@iphone-only` / `@desktop-only` pick
+the project). Accessibility scans use [playwright-test-commons](https://github.com/benweese/playwright-test-commons)'
+`expectNoA11yViolations`. Every run prints the home-budget commit it tested.
 
 ## Claude Code
 
