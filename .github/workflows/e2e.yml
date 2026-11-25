@@ -1,6 +1,6 @@
 # End-to-end + accessibility tests against home-budget's local `wrangler dev` (never production).
-# Runs on PRs, pushes to main, nightly (catches app changes that break e2e) and by hand. Also callable from
-# home-budget as a reusable workflow (wired up with deploy gating later). The "lint" and "e2e" jobs are
+# Runs on PRs, pushes to main, nightly (catches app changes that break e2e) and by hand, always against
+# home-budget main. Also callable from home-budget as a reusable workflow (wired up with deploy gating later). The "lint" and "e2e" jobs are
 # required checks on main. Every run prints the home-budget commit it tested.
 name: e2e
 
@@ -11,16 +11,10 @@ on:
   schedule:
     - cron: "41 8 * * *" # daily 08:41 UTC
   workflow_dispatch:
-    inputs:
-      app-ref:
-        description: home-budget branch, tag or SHA to test
-        default: main
+  # Callable from home-budget. Always tests home-budget main for now: an input ref would run code from an
+  # arbitrary ref in a context that also runs on main (CodeQL: actions/cache-poisoning). A pinned-SHA input
+  # comes back with deploy gating, with its own mitigation.
   workflow_call:
-    inputs:
-      app-ref:
-        description: home-budget branch, tag or SHA to test
-        type: string
-        default: main
 
 permissions: {}
 
@@ -65,7 +59,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: benweese/home-budget
-          ref: ${{ inputs.app-ref || 'main' }}
+          ref: main
           path: home-budget
           persist-credentials: false
       - name: Print the home-budget commit under test
