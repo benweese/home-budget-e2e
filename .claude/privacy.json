@@ -1,0 +1,1 @@
+{ "version": 1, "commitHook": true, "dollarAmounts": false, "allowlist": ["git@github.com"] }

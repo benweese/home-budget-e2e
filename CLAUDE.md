@@ -31,6 +31,5 @@ owner decides). The public-code rules below apply now. Playwright end-to-end and
 - PR titles are Conventional Commits; squash merge only.
 - Claude plugins (benweese marketplace): qa (test-file hook + auto review on, `.claude/qa.json`), docs,
   workflow, accessibility, privacy, guardrails — see README.
-- `.claude/board.json`, `.claude/privacy.json` and `.claude/qa/` (saved requirements) are local only
-  (gitignored); never commit them.
+- `.claude/board.json` and `.claude/qa/` (saved requirements) are local only (gitignored); never commit them.
 - A privacy or secret block on commit is a real finding: fix the line, never bypass it.
