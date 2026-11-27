@@ -37,9 +37,12 @@ accessibility, privacy and guardrails (`.claude/settings.json`). Install them on
   `playwright test --list`; after a green run, the tests are reviewed against the saved request. Saved
   requests live in `.claude/qa/` (gitignored).
 - **Commit blockers:** `.claude/privacy.json` blocks personal data and `.claude/guardrails.json` blocks
-  secrets before Claude commits. The privacy denylist lives outside the repo (a sibling folder, never
-  committed); without it the scan says "denylist skipped" and still runs. For commits made outside Claude,
-  run `install-privacy-git-hook` once, and again after each privacy plugin update.
+  secrets before Claude commits. The hooks read `.claude/privacy.json` from the folder the Claude session
+  started in. This repo's copy names no denylist, so a session started here runs the built-in checks only; to
+  add a denylist, start the session from a folder whose `privacy.json` names one
+  ([privacy plugin docs](https://github.com/benweese/claude-plugins/blob/main/plugins/privacy/README.md)).
+  For commits made outside Claude, run `install-privacy-git-hook` once, and again after each privacy plugin
+  update.
 - **`.claude/board.json` is local only** (gitignored): it's the maintainer's task-board config.
 - Accessibility rules: WCAG 2.2 AA plus
   [home-budget's docs/accessibility.md](https://github.com/benweese/home-budget/blob/main/docs/accessibility.md).

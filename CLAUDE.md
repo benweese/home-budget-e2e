@@ -1,6 +1,7 @@
 # home-budget-e2e
 
-Public repo: Playwright end-to-end and accessibility tests for
+Private; may go public once a gitleaks scan, secret scanning + push protection and code scanning are on (the
+owner decides). The public-code rules below apply now. Playwright end-to-end and accessibility tests for
 [home-budget](https://github.com/benweese/home-budget) (iPhone, iPad, desktop). Read README.md first.
 
 ## Rules
@@ -10,6 +11,7 @@ Public repo: Playwright end-to-end and accessibility tests for
 - **One exception:** the app's name "Budget Ben" (the owner's first name, chosen as the brand) may appear in
   tests and snapshots, e.g. checking the page title. No other real names, ever.
 - **No references to private trackers** in commits, PRs or code (no issue numbers from elsewhere).
+  Branches use this repo's own issue numbers.
 - Tests run against home-budget's local `wrangler dev` (later the demo), **never production**.
 - Locators: role / label first; `data-testid` only where a role or label is ambiguous.
 - Accessibility target: WCAG 2.2 AA plus home-budget's docs/accessibility.md. Reports say "no automated
