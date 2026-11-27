@@ -1,7 +1,7 @@
 # home-budget-e2e
 
-Private; may go public once a gitleaks scan, secret scanning + push protection and code scanning are on (Ben
-decides). Playwright end-to-end and accessibility tests for
+Private; may go public once a gitleaks scan, secret scanning + push protection and code scanning are on (the
+owner decides). The public-code rules below apply now. Playwright end-to-end and accessibility tests for
 [home-budget](https://github.com/benweese/home-budget) (iPhone, iPad, desktop). Read README.md first.
 
 ## Rules
