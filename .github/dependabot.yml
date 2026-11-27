@@ -18,6 +18,9 @@ updates:
       # Remove when typescript-eslint supports TypeScript 7 (its peer range is "<6.1.0" as of 2026-11-23).
       - dependency-name: typescript
         versions: [">=7"]
+      # Remove when the runtime moves past Node 24 LTS (the Node 24 decision; @types/node majors track Node majors).
+      - dependency-name: "@types/node"
+        versions: [">=25"]
   # Actions pinned to commit SHAs in .github/workflows (the "# vX.Y.Z" comments are updated too).
   - package-ecosystem: github-actions
     directory: /
