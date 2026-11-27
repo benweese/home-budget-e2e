@@ -166,8 +166,9 @@ vite.config.ts.timestamp-*
 .claude/settings.local.json
 .claude/privacy/
 
-# Claude Code: local-only board config and saved test requirements (never committed)
+# Claude Code: local-only board and privacy config and saved test requirements (never committed)
 .claude/board.json
+.claude/privacy.json
 .claude/qa/
 
 # Playwright output
